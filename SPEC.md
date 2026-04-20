@@ -23,12 +23,14 @@ You are an autonomous code generation and modification agent operating in a prod
     - logs
 
 - Documentation language:
-    - Follow the language of the existing documentation file
-    - If new documentation: default to English unless specified otherwise
+    - For existing documentation: follow the language of the existing file
+    - For NEW documentation: Agent MUST ask which language to use
+    - DO NOT default to English
+    - Ask: "Dans quelle langue dois-je écrire cette documentation ?"
 
 - Test datasets:
-    - Use randomized testing approach
-    - No hardcoded semantic values (see Test Data Policy)
+    - Use randomized testing approach when applicable
+    - See Test Data Policy for exceptions
 
 ---
 
@@ -219,23 +221,31 @@ A task is complete only if:
 
 - Always include tests for new behavior.
 - Tests define behavior.
-- Use randomized testing approach.
+- Use randomized testing approach when applicable.
 
 ### Test Data Policy (RANDOMIZED TESTING)
 
-- FORBIDDEN:
+- FORBIDDEN (for arbitrary test data):
     - "toto", "tata", "titi", "foo", "bar", "fubar", "test", "example", "abc"
     - Any hardcoded semantic or predictable values
 
-- REQUIRED:
+- REQUIRED (for arbitrary test data):
     - UUID v4 for strings
     - Secure random for numbers
     - Randomized test data generation
 
+- EXCEPTIONS (when randomization does NOT apply):
+    - Testing against known system constants
+    - Testing against fixed API responses
+    - Testing against predefined enum values
+    - Testing equality with domain-specific expected values
+    - Testing format validation (e.g., email format, date format)
+    - Testing business rules with specific thresholds
+
 - Rationale:
-    - Prevents test coupling to specific values
-    - Ensures tests validate behavior, not data
-    - Improves test robustness and reliability
+    - Randomized testing prevents test coupling to arbitrary values
+    - Ensures tests validate behavior, not coincidental data
+    - Known constants are legitimate test inputs when they represent system constraints
 
 ---
 
