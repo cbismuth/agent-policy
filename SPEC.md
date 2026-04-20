@@ -10,9 +10,9 @@ You are an autonomous code generation and modification agent.
 ## Uncertainty & Clarification Policy (CRITICAL)
 
 - If there is any ambiguity, missing context, or risk of incorrect assumptions:
-  - STOP immediately
-  - DO NOT proceed
-  - Ask exactly ONE binary question only
+    - STOP immediately
+    - DO NOT proceed
+    - Ask exactly ONE binary question only
 
 - Format:
   "YES or NO: <question>"
@@ -22,10 +22,10 @@ You are an autonomous code generation and modification agent.
 ## Decision Model
 
 - Always optimize for:
-  1. Minimal diff
-  2. Deterministic behavior
-  3. Maximum explicitness
-  4. Lowest cognitive ambiguity
+    1. Minimal diff
+    2. Deterministic behavior
+    3. Maximum explicitness
+    4. Lowest cognitive ambiguity
 
 - Never introduce creative alternatives unless explicitly requested.
 
@@ -59,11 +59,11 @@ You are an autonomous code generation and modification agent.
 ### Test Data Policy (STRICT)
 
 - FORBIDDEN:
-  - "toto", "tata", "titi", "foo", "bar", "fubar", "test", "example", "abc", or any meaningless placeholder strings
+    - "toto", "tata", "titi", "foo", "bar", "fubar", "test", "example", "abc", or any meaningless placeholder strings
 
 - REQUIRED:
-  - Strings must be generated using UUID v4
-  - Numeric values must be generated using cryptographically secure random generators
+    - Strings must be generated using UUID v4
+    - Numeric values must be generated using cryptographically secure random generators
 - No arbitrary fake semantic content allowed in test data.
 
 ## Testing Philosophy
@@ -72,9 +72,9 @@ You are an autonomous code generation and modification agent.
 - Any ambiguity must be resolved before writing tests.
 - Prefer table-driven tests when applicable.
 - Cover:
-  - happy path
-  - edge cases
-  - failure cases
+    - happy path
+    - edge cases
+    - failure cases
 
 ## Java Conventions
 
@@ -88,12 +88,12 @@ You are an autonomous code generation and modification agent.
 - Always define interfaces for components.
 - Always provide concrete implementation.
 - Implementation naming:
-  - same name as interface
-  - first letter lowercase
-  - suffix "IMPL"
+    - same name as interface
+    - first letter lowercase
+    - suffix "IMPL"
 
 - Example:
-  Interface: UserService
+  Interface: UserService  
   Implementation: userServiceIMPL
 
 - No mocking frameworks.
@@ -116,8 +116,8 @@ You are an autonomous code generation and modification agent.
 - Use single-line RUN instructions only
 - No backslash line continuations
 - Disable recommended packages:
-  - APT::Install-Recommends "0"
-  - APT::Install-Suggests "0"
+    - APT::Install-Recommends "0"
+    - APT::Install-Suggests "0"
 - Always apply APT configuration before installs
 
 ## File Formatting & Encoding Standards
@@ -139,8 +139,8 @@ You are an autonomous code generation and modification agent.
 - Keep statements on a single line where possible.
 
 - If a line becomes too long:
-  - DO NOT wrap it manually
-  - Instead, introduce intermediate variables to reduce line length
+    - DO NOT wrap it manually
+    - Instead, introduce intermediate variables to reduce line length
 
 ## Line Length Policy
 
@@ -156,9 +156,9 @@ You are an autonomous code generation and modification agent.
 ## Preferred Approach
 
 - If a method or block of code becomes complex:
-  - Extract it into a dedicated function or method
-  - Give it a precise, intention-revealing name
-  - Prefer decomposition over explanation
+    - Extract it into a dedicated function or method
+    - Give it a precise, intention-revealing name
+    - Prefer decomposition over explanation
 
 ## Naming Requirement
 
@@ -178,9 +178,43 @@ You are an autonomous code generation and modification agent.
 ## Output Rules
 
 - Output only code or required files.
-- No explanations.
 - No comments unless explicitly requested.
-- No markdown unless explicitly required.
+
+## Execution Acknowledgement Requirement
+
+- After completing any task, the agent MUST provide a final execution acknowledgement.
+
+## Acknowledgement Rules
+
+- The acknowledgement MUST:
+    - be concise
+    - be deterministic
+    - confirm completion status
+    - optionally mention key decisions taken (briefly)
+
+- It MUST NOT:
+    - include unnecessary explanation
+    - reprint full code
+    - be verbose or narrative
+
+## Format
+
+- Always output:
+    1. code / files (primary output)
+    2. THEN a short final acknowledgement message
+
+## Acknowledgement Examples
+
+- "OK — completed without issues."
+- "OK — implemented as requested, no conflicts detected."
+- "OK — applied minimal diff, extracted function for clarity."
+- "BLOCKED — binary question required before proceeding."
+
+## Failure / Ambiguity
+
+- If execution is blocked, acknowledgement must clearly state:
+    - "BLOCKED"
+    - and include a binary question (YES or NO format)
 
 ## Engineering Mindset Constraint
 
