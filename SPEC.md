@@ -96,12 +96,30 @@ You are an autonomous code generation and modification agent operating in a prod
 
 ---
 
+## Architecture Context
+
+- System architecture:
+    - Microservices
+    - Serverless (AWS Lambda, Cloud Run, etc.)
+    - Event-driven (Kafka, SQS, EventBridge, etc.)
+
+- Consequence: NO multithreading by default (system is natively distributed)
+
+---
+
 ## Error Handling Strategy
 
 - **Fail-fast approach REQUIRED**
 - System must be reactive and fail immediately on errors
 - No silent failures
 - No graceful degradation unless explicitly requested
+
+### Error Types & Exceptions:
+
+- Agent MAY create custom error types (Go) or exception classes (Java)
+- **NO over-engineering on error handling**
+- Keep error handling lightweight and simple
+- Only create custom types when adding meaningful context
 
 ### Error Message Conventions (by language):
 
@@ -114,7 +132,7 @@ You are an autonomous code generation and modification agent operating in a prod
 **Java/Spring:**
 
 - Start with uppercase letter
-- No punctuation at all
+- No punctuation
 - Variable values in square brackets
 - Example: `Failed to process order [123]`
 
@@ -148,12 +166,29 @@ You are an autonomous code generation and modification agent operating in a prod
 
 ## Security Requirements
 
-### Input Validation (MANDATORY):
+### Input Validation (LAYERED APPROACH):
 
-- All methods MUST validate inputs at minimum:
-    - null checks
-    - empty string checks
-    - boundary validation
+**Public APIs / Entry Points (STRICT):**
+
+- Null checks
+- Empty/blank checks
+- Format validation
+- Range/boundary validation
+- Business rule validation
+
+**Internal Methods (DEFENSIVE):**
+
+- Null checks
+- Empty checks
+- Fail-fast on invalid state
+
+**Domain Objects (BUSINESS VALIDATORS):**
+
+- Introduce domain validators (functional interfaces in Java)
+- Even if empty initially, create the structure
+- Allows incremental addition of business rules
+- Example (Java): `OrderValidator`, `CustomerValidator`
+- Example (Go): validator functions or interfaces
 
 ### Data Sanitization:
 
@@ -179,6 +214,7 @@ You are an autonomous code generation and modification agent operating in a prod
 
 - Agent MUST NOT create commits
 - User commits after each generation
+- Rationale: user compares working directory with last commit to review changes
 
 ### Commit Message Format (when user commits):
 
@@ -214,7 +250,17 @@ You are an autonomous code generation and modification agent operating in a prod
 
 ---
 
-## Database & Migration Policy
+## Database & Persistence
+
+### ORM/Framework:
+
+**Go:**
+
+- Ent (entgo.io)
+
+**Java:**
+
+- Spring JDBC
 
 ### Schema Migrations:
 
@@ -225,6 +271,9 @@ You are an autonomous code generation and modification agent operating in a prod
     - NO column deletion
     - NO modification of existing columns
     - ONLY additions allowed
+
+- Rationale: Ensures backward compatibility at all times
+- Trade-off: Schema may accumulate deprecated columns (acceptable)
 
 ### Test Data Seeding:
 
@@ -242,7 +291,7 @@ You are an autonomous code generation and modification agent operating in a prod
 ## Concurrency & Threading Model
 
 - **NO multithreading by default**
-- System is distributed by nature
+- System is distributed by nature (microservices, serverless, event-driven)
 - Multithreading NOT necessary internally
 
 ### Exceptions:
@@ -271,6 +320,7 @@ You are an autonomous code generation and modification agent operating in a prod
 - Observability (metrics, health checks, tracing) is a **final iteration**
 - Do NOT add observability during initial development
 - Observability adds complexity and requires stable code first
+- Rationale: Premature observability complicates debugging and increases cognitive load
 
 ---
 
@@ -298,6 +348,34 @@ You are an autonomous code generation and modification agent operating in a prod
 
 ---
 
+## Feature Flags
+
+- Any independent feature MUST be activatable/deactivatable via feature flag
+- Feature flags enable:
+    - Safe deployments
+    - A/B testing
+    - Gradual rollouts
+    - Emergency kill switch
+
+- Naming convention: follow project standards or ask user
+- Cleanup: remove feature flag after feature stabilization (typically 2-3 versions)
+
+---
+
+## Caching Policy
+
+- **NO caching without explicit discussion and approval**
+- Before implementing cache, MUST define:
+    - Cache key strategy
+    - Expiration/TTL strategy
+    - Invalidation strategy
+    - Cache stampede protection
+    - Consistency requirements
+
+- Agent MUST ask before introducing any caching mechanism
+
+---
+
 ## Type Safety & Validation
 
 - **Strong typing REQUIRED**
@@ -313,6 +391,23 @@ You are an autonomous code generation and modification agent operating in a prod
 - Idempotency is a core principle of all systems
 - Retry must not cause side effects
 - Design for safe replay
+
+---
+
+## Retry Policy (External Calls)
+
+### Configuration:
+
+- Maximum retry attempts: **10**
+- Backoff strategy: **exponential backoff**
+- Maximum total duration: **1 minute**
+- Example progression: 100ms, 200ms, 400ms, 800ms, 1.6s, 3.2s, 6.4s, 12.8s, 25.6s (stops at ~51s total)
+
+### Application:
+
+- Apply to all external system calls (APIs, databases, message queues)
+- Use idempotency tokens for non-idempotent APIs
+- Respect circuit breaker state
 
 ---
 
@@ -348,6 +443,10 @@ You are an autonomous code generation and modification agent operating in a prod
 - Agent should:
     - Configure client with rate limiting and circuit breaker when possible
     - OR propose implementation if not available in client
+
+### Retry Policy:
+
+- See "Retry Policy (External Calls)" section above
 
 ---
 
@@ -496,11 +595,25 @@ A task is complete only if:
 
 ---
 
-## Refactoring Policy (STRICT)
+## Refactoring Policy
 
-- No refactoring without explicit approval.
-- Only allowed:
-    - local extraction inside current change scope
+### Allowed without approval:
+
+- Extract method (within current scope)
+- Rename symbols (variables, functions, classes) for clarity
+- Remove dead code
+
+### Requires approval:
+
+- Module-level refactoring
+- Architectural changes
+- Pattern changes
+- Cross-module refactoring
+
+### Rationale:
+
+- Local improvements enhance readability
+- Structural changes require alignment
 
 ---
 
@@ -518,6 +631,13 @@ A task is complete only if:
 - Always include tests for new behavior.
 - Tests define behavior.
 - Use randomized testing approach when applicable.
+
+### Test Modification Policy:
+
+- **Never modify passing tests** (they guarantee non-regression)
+- **When behavior changes**: existing tests MUST be updated to reflect new behavior
+- **Agent MUST ask**: "Le comportement a changé, dois-je mettre à jour les tests existants : OUI ou NON ?"
+- Failing tests due to test bugs (not code bugs) may be fixed with approval
 
 ### Test Data Policy (RANDOMIZED TESTING)
 
@@ -549,8 +669,9 @@ A task is complete only if:
 
 ## Testing Strategy
 
-- Never modify existing tests.
-- Only add new tests.
+- Never modify passing tests (non-regression guarantee)
+- Only add new tests
+- Update tests when behavior changes (with approval)
 - Dataset format preferred: YAML
 - External datasets optional, recommended above ~10 entries
 
@@ -668,3 +789,4 @@ After each execution:
 - Fail-fast approach
 - Idempotency as core principle
 - Security by default
+- Backward compatibility by design
