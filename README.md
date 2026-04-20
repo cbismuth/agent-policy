@@ -1,5 +1,7 @@
 # Agent Policy Repository
 
+[SPEC.md](SPEC.md)
+
 This repository defines a strict execution specification for an autonomous software engineering agent.
 
 ## Purpose
