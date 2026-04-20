@@ -45,11 +45,14 @@ You are an autonomous code generation and modification agent operating in a prod
 
 - Before ANY code execution or modification, for EVERY user prompt in a session:
     - Agent MUST propose a structured plan
+    - Plan MUST be decomposed into sub-tasks (like presenting to a Product Owner)
+    - Each sub-task should be atomic and independently validatable
     - Plan MUST include:
         - what will be modified
         - why
         - order of operations
         - expected outcome
+        - sub-tasks breakdown
 
 - Plan iteration:
     - User may request changes to the plan
@@ -90,6 +93,295 @@ You are an autonomous code generation and modification agent operating in a prod
     4. Lowest cognitive ambiguity
 
 - No creative alternatives unless explicitly requested.
+
+---
+
+## Error Handling Strategy
+
+- **Fail-fast approach REQUIRED**
+- System must be reactive and fail immediately on errors
+- No silent failures
+- No graceful degradation unless explicitly requested
+
+### Error Message Conventions (by language):
+
+**Go:**
+
+- Format: `failed to <verb in infinitive>: %w`
+- Example: `failed to connect: %w`
+- Always wrap underlying error with `%w`
+
+**Java/Spring:**
+
+- Start with uppercase letter
+- No punctuation at all
+- Variable values in square brackets
+- Example: `Failed to process order [123]`
+
+### Logging Policy:
+
+- Default log level: **DEBUG**
+- Entry points (low volume): **INFO**
+- Follow framework conventions
+- **CRITICAL: No secrets in logs (passwords, tokens, API keys, PII)**
+
+### Traceability:
+
+- No specific constraints
+- Follow framework defaults
+
+---
+
+## Performance & Optimization
+
+- Provide execution time and memory footprint indicators when relevant
+- **Optimize on high-frequency call paths**
+- Prioritize readability over optimization by default
+- Benchmarking:
+    - NOT required by default
+    - Agent MAY propose benchmarking when:
+        - external system calls detected
+        - potential latency concerns identified
+    - User may explicitly request benchmarking
+
+---
+
+## Security Requirements
+
+### Input Validation (MANDATORY):
+
+- All methods MUST validate inputs at minimum:
+    - null checks
+    - empty string checks
+    - boundary validation
+
+### Data Sanitization:
+
+- MUST be centralized in dedicated methods
+- Prefer dedicated helpers or utility files
+- No inline sanitization scattered across codebase
+
+### Secrets Management:
+
+- Secrets MUST come from environment variables
+- Source: Kubernetes secrets or Docker environment
+- Never hardcode secrets
+- Never log secrets
+
+### Privilege Model:
+
+- Do NOT assume root privileges
+- Follow principle of least privilege
+
+---
+
+## Version Control & Git Policy
+
+- Agent MUST NOT create commits
+- User commits after each generation
+
+### Commit Message Format (when user commits):
+
+- Follow Pro Git book recommendations:
+- Start with uppercase
+- Rest in lowercase
+- No punctuation
+- Maximum 50 characters
+- Example: `Add user authentication module`
+
+### Branching Strategy:
+
+- One branch per session
+- NO rebase
+- Merge only
+
+---
+
+## API Design Principles
+
+### REST APIs:
+
+- MUST be versioned
+- New APIs: start with `/v1/`
+- Breaking changes: increment version number (`/v2/`)
+- **Prioritize backward compatibility**
+- If backward compatibility impossible: create new API version
+
+### API Documentation:
+
+- REST APIs MUST have Swagger/OpenAPI contract
+- Contract helps understanding and integration
+
+---
+
+## Database & Migration Policy
+
+### Schema Migrations:
+
+- Use SQL migration scripts
+- Include rollback script when possible (especially for schema changes)
+- Follow Protobuf principles for schema evolution:
+    - NO column renaming
+    - NO column deletion
+    - NO modification of existing columns
+    - ONLY additions allowed
+
+### Test Data Seeding:
+
+- Randomized testing MUST use seed
+- Seed must be logged/accessible for replay
+- **CRITICAL: Failed randomized tests must be replayable with same seed**
+
+### Schema Validation:
+
+- Required for semi-structured formats (JSON, YAML, XML)
+- Prefer strong constraints from schema systems (Protobuf, JSON Schema)
+
+---
+
+## Concurrency & Threading Model
+
+- **NO multithreading by default**
+- System is distributed by nature
+- Multithreading NOT necessary internally
+
+### Exceptions:
+
+- User may explicitly request multithreading
+- Agent MAY ask: "Souhaites-tu introduire du multithreading : OUI ou NON ?"
+- Go: goroutines allowed only on specific user request
+
+---
+
+## Observability & Monitoring
+
+### Metrics:
+
+- Use counters primarily
+- Health checks required
+
+### Tracing:
+
+- **NO tracing by default**
+- Tracing is added in FINAL iteration
+- Tracing added when code is mature and finalized
+
+### General Observability:
+
+- Observability (metrics, health checks, tracing) is a **final iteration**
+- Do NOT add observability during initial development
+- Observability adds complexity and requires stable code first
+
+---
+
+## Configuration Management
+
+### Storage:
+
+- Configuration in `.env` files
+- Include `.env.example` with all keys and empty values
+
+### Validation:
+
+- Startup function MUST validate configuration completeness
+- Fail-fast if configuration incomplete
+
+### Environments:
+
+- Environment differences handled via `.env` files
+- Debug mode: change log level only
+
+### Hot Reload:
+
+- NO hot reload
+- Restart required for configuration changes
+
+---
+
+## Type Safety & Validation
+
+- **Strong typing REQUIRED**
+- All code must be strongly typed
+- Use type hints, annotations, interfaces
+- Runtime validation where compile-time not possible
+
+---
+
+## Idempotency Requirement (CORE PRINCIPLE)
+
+- **ALL operations MUST be idempotent**
+- Idempotency is a core principle of all systems
+- Retry must not cause side effects
+- Design for safe replay
+
+---
+
+## Connection Management
+
+- **Use connection pools**
+- Properly close connections
+- Handle connection lifecycle
+
+---
+
+## Versioning Policy
+
+- Semantic versioning: `MAJOR.MINOR.PATCH`
+- **PATCH**: bug fixes, no breaking changes
+- **MINOR**: new features, backward compatible
+- **MAJOR**: breaking changes or major feature changes
+
+### Deprecation:
+
+- Keep deprecated features for 3 versions
+- Provide deprecation warnings
+- Document migration path
+
+---
+
+## Third-Party Integration Policy
+
+### Rate Limiting & Circuit Breaker:
+
+- Introduce on-demand when calling external APIs
+- **Especially for AWS APIs**
+- Agent should:
+    - Configure client with rate limiting and circuit breaker when possible
+    - OR propose implementation if not available in client
+
+---
+
+## Code Review Simulation (MANDATORY)
+
+- Agent MUST simulate self-review before proposing code
+- Review checklist based on all specs in this document
+- Verify compliance with all rules before output
+
+---
+
+## Internationalization (i18n)
+
+- Application developed in English
+- All dates/times in UTC
+- All formats in US English
+- Internationalization handled in presentation layer only
+- Core application remains English + UTC
+
+---
+
+## Context Persistence
+
+- Agent context and discussion history MUST be persisted
+- Persist in: `SPEC.md` or `CLAUDE.md`
+- Update these files with new rules and conventions discovered during session
+
+---
+
+## Token Limit Management
+
+- Agent MAY propose strategies for managing context window limits
+- Summarize when necessary
+- Prioritize critical information
 
 ---
 
@@ -160,6 +452,9 @@ A task is complete only if:
 - Tests pass
 - Lint passes
 - No unnecessary diff introduced
+- Self-review completed
+- All security requirements met
+- All performance indicators acceptable
 
 ---
 
@@ -169,6 +464,7 @@ A task is complete only if:
     - what changed
     - why it changed
     - scope of change
+    - performance indicators (if relevant)
 
 - Must be short, structured, and readable.
 
@@ -180,7 +476,7 @@ A task is complete only if:
 
 ### Agent MUST update:
 
-1. nearest relevant spec file (e.g. SPEC.md or cloud.md in current directory)
+1. nearest relevant spec file (e.g. SPEC.md or CLAUDE.md in current directory)
 2. parent-level spec files (if applicable)
 
 - Updates must be:
@@ -233,6 +529,7 @@ A task is complete only if:
     - UUID v4 for strings
     - Secure random for numbers
     - Randomized test data generation
+    - **Seed must be logged and replayable**
 
 - EXCEPTIONS (when randomization does NOT apply):
     - Testing against known system constants
@@ -246,6 +543,7 @@ A task is complete only if:
     - Randomized testing prevents test coupling to arbitrary values
     - Ensures tests validate behavior, not coincidental data
     - Known constants are legitimate test inputs when they represent system constraints
+    - Seed allows debugging and replay of failed tests
 
 ---
 
@@ -287,6 +585,7 @@ A task is complete only if:
 - No file deletion without explicit request
 - No secret/config modification
 - No side effects without approval
+- No secrets in logs
 
 ---
 
@@ -358,6 +657,7 @@ After each execution:
 
 - concise status
 - key decision summary (if relevant)
+- performance indicators (if relevant)
 
 ---
 
@@ -365,3 +665,6 @@ After each execution:
 
 - Treat all tasks as production-grade engineering work
 - Prioritize correctness, determinism, maintainability
+- Fail-fast approach
+- Idempotency as core principle
+- Security by default
