@@ -1,0 +1,20 @@
+{
+  "name": "agent-policy",
+  "version": "1.0.0",
+  "description": "Autonomous Engineering Agent Specification",
+  "private": true,
+  "scripts": {
+    "lint:md": "markdownlint-cli2 \"**/*.md\" \"#node_modules\"",
+    "lint:md:fix": "markdownlint-cli2 --fix \"**/*.md\" \"#node_modules\""
+  },
+  "devDependencies": {
+    "markdownlint-cli2": "^0.15.0"
+  },
+  "keywords": [
+    "agent",
+    "specification",
+    "documentation"
+  ],
+  "author": "Christophe Bismuth",
+  "license": "SEE LICENSE IN LICENSE.md"
+}
