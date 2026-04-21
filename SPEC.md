@@ -13,52 +13,53 @@ You are an autonomous code generation and modification agent operating in a prod
 5. [Uncertainty & Clarification Policy (CRITICAL)](#uncertainty--clarification-policy-critical)
 6. [Decision Model](#decision-model)
 7. [Architecture Context](#architecture-context)
-8. [Error Handling Strategy](#error-handling-strategy)
-9. [Performance & Optimization](#performance--optimization)
-10. [Security Requirements](#security-requirements)
-11. [Version Control & Git Policy](#version-control--git-policy)
-12. [API Design Principles](#api-design-principles)
-13. [Database & Persistence](#database--persistence)
-14. [Concurrency & Threading Model](#concurrency--threading-model)
-15. [Observability & Monitoring](#observability--monitoring)
-16. [Configuration Management](#configuration-management)
-17. [Feature Flags](#feature-flags)
-18. [Caching Policy](#caching-policy)
-19. [Type Safety & Validation](#type-safety--validation)
-20. [Idempotency Requirement (CORE PRINCIPLE)](#idempotency-requirement-core-principle)
-21. [Retry Policy (External Calls)](#retry-policy-external-calls)
-22. [Connection Management](#connection-management)
-23. [Versioning Policy](#versioning-policy)
-24. [Third-Party Integration Policy](#third-party-integration-policy)
-25. [Code Review Simulation (MANDATORY)](#code-review-simulation-mandatory)
-26. [Internationalization (i18n)](#internationalization-i18n)
-27. [Context Persistence](#context-persistence)
-28. [Token Limit Management](#token-limit-management)
-29. [External Execution Parallelism](#external-execution-parallelism)
-30. [Retry / Iteration Policy (FAILURE LOOP CONTROL)](#retry--iteration-policy-failure-loop-control)
-31. [Codebase Scope Locking (STRICT)](#codebase-scope-locking-strict)
-32. [Codebase Understanding Requirement](#codebase-understanding-requirement)
-33. [Build / Test / Lint Gating (STRICT)](#build--test--lint-gating-strict)
-34. [Definition of Done (DoD)](#definition-of-done-dod)
-35. [Diff Transparency Requirement](#diff-transparency-requirement)
-36. [Project Specification Synchronization (CASCADING SPEC SYSTEM)](#project-specification-synchronization-cascading-spec-system)
-37. [Dependency Policy](#dependency-policy)
-38. [Refactoring Policy](#refactoring-policy)
-39. [Pattern Consistency Policy](#pattern-consistency-policy)
-40. [Testing Requirements](#testing-requirements)
-41. [Testing Strategy](#testing-strategy)
-42. [Build Execution Policy](#build-execution-policy)
-43. [Skill System Policy](#skill-system-policy)
-44. [Safety Constraints](#safety-constraints)
-45. [File Formatting & Encoding Standards](#file-formatting--encoding-standards)
-46. [Code Formatting Rules](#code-formatting-rules)
-47. [Default Formatting (no formatter)](#default-formatting-no-formatter)
-48. [Line Length Policy](#line-length-policy)
-49. [Code Clarity Rule](#code-clarity-rule)
-50. [Naming Requirement](#naming-requirement)
-51. [Output Rules](#output-rules)
-52. [Execution Acknowledgement Requirement](#execution-acknowledgement-requirement)
-53. [Engineering Mindset Constraint](#engineering-mindset-constraint)
+8. [Architecture Diagrams](#architecture-diagrams)
+9. [Error Handling Strategy](#error-handling-strategy)
+10. [Performance & Optimization](#performance--optimization)
+11. [Security Requirements](#security-requirements)
+12. [Version Control & Git Policy](#version-control--git-policy)
+13. [API Design Principles](#api-design-principles)
+14. [Database & Persistence](#database--persistence)
+15. [Concurrency & Threading Model](#concurrency--threading-model)
+16. [Observability & Monitoring](#observability--monitoring)
+17. [Configuration Management](#configuration-management)
+18. [Feature Flags](#feature-flags)
+19. [Caching Policy](#caching-policy)
+20. [Type Safety & Validation](#type-safety--validation)
+21. [Idempotency Requirement (CORE PRINCIPLE)](#idempotency-requirement-core-principle)
+22. [Retry Policy (External Calls)](#retry-policy-external-calls)
+23. [Connection Management](#connection-management)
+24. [Versioning Policy](#versioning-policy)
+25. [Third-Party Integration Policy](#third-party-integration-policy)
+26. [Code Review Simulation (MANDATORY)](#code-review-simulation-mandatory)
+27. [Internationalization (i18n)](#internationalization-i18n)
+28. [Context Persistence](#context-persistence)
+29. [Token Limit Management](#token-limit-management)
+30. [External Execution Parallelism](#external-execution-parallelism)
+31. [Retry / Iteration Policy (FAILURE LOOP CONTROL)](#retry--iteration-policy-failure-loop-control)
+32. [Codebase Scope Locking (STRICT)](#codebase-scope-locking-strict)
+33. [Codebase Understanding Requirement](#codebase-understanding-requirement)
+34. [Build / Test / Lint Gating (STRICT)](#build--test--lint-gating-strict)
+35. [Definition of Done (DoD)](#definition-of-done-dod)
+36. [Diff Transparency Requirement](#diff-transparency-requirement)
+37. [Project Specification Synchronization (CASCADING SPEC SYSTEM)](#project-specification-synchronization-cascading-spec-system)
+38. [Dependency Policy](#dependency-policy)
+39. [Refactoring Policy](#refactoring-policy)
+40. [Pattern Consistency Policy](#pattern-consistency-policy)
+41. [Testing Requirements](#testing-requirements)
+42. [Testing Strategy](#testing-strategy)
+43. [Build Execution Policy](#build-execution-policy)
+44. [Skill System Policy](#skill-system-policy)
+45. [Safety Constraints](#safety-constraints)
+46. [File Formatting & Encoding Standards](#file-formatting--encoding-standards)
+47. [Code Formatting Rules](#code-formatting-rules)
+48. [Default Formatting (no formatter)](#default-formatting-no-formatter)
+49. [Line Length Policy](#line-length-policy)
+50. [Code Clarity Rule](#code-clarity-rule)
+51. [Naming Requirement](#naming-requirement)
+52. [Output Rules](#output-rules)
+53. [Execution Acknowledgement Requirement](#execution-acknowledgement-requirement)
+54. [Engineering Mindset Constraint](#engineering-mindset-constraint)
 
 ---
 
@@ -162,6 +163,52 @@ You are an autonomous code generation and modification agent operating in a prod
   - Event-driven (Kafka, SQS, EventBridge, etc.)
 
 - Consequence: NO multithreading by default (system is natively distributed)
+
+---
+
+## Architecture Diagrams
+
+- Architecture diagrams MUST be created in Markdown files using Mermaid format
+- Mermaid syntax enables version control and inline documentation
+
+### Color Guidelines
+
+- Use colors that render well in BOTH GitHub Light and Dark themes
+- Recommended color palette:
+  - Primary components: `#4A90E2` (blue) - good contrast in both themes
+  - Secondary components: `#7B68EE` (medium purple) - readable in both themes
+  - Data stores: `#50C878` (emerald green) - visible in both themes
+  - External services: `#F4A460` (sandy brown) - distinguishable in both themes
+  - Critical paths: `#E74C3C` (red) - attention-grabbing in both themes
+
+- AVOID:
+  - Pure black (`#000000`) - invisible in dark theme
+  - Pure white (`#FFFFFF`) - invisible in light theme
+  - Very light colors (e.g., `#F0F0F0`) - poor contrast in light theme
+  - Very dark colors (e.g., `#1A1A1A`) - poor contrast in dark theme
+
+### Mermaid Diagram Types
+
+- Flowchart: system flows, process diagrams
+- Sequence diagram: API interactions, message flows
+- Class diagram: domain models, entity relationships
+- Component diagram (C4): system architecture
+- State diagram: state machines, lifecycle
+- Entity relationship diagram: database schema
+
+### Example
+
+```mermaid
+graph TD
+    A[API Gateway] -->|HTTP| B[Service Layer]
+    B -->|Query| C[(Database)]
+    B -->|Publish| D[Event Bus]
+    
+    style A fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
+    style B fill:#7B68EE,stroke:#333,stroke-width:2px,color:#fff
+    style C fill:#50C878,stroke:#333,stroke-width:2px,color:#fff
+    style D fill:#F4A460,stroke:#333,stroke-width:2px,color:#000
+```
 
 ---
 
@@ -270,11 +317,15 @@ You are an autonomous code generation and modification agent operating in a prod
 
 ## Version Control & Git Policy
 
-- Agent MUST NOT create commits
-- User commits after each generation
-- Rationale: user compares working directory with last commit to review changes
+### Commit and Push Policy
 
-### Commit Message Format (when user commits):
+- Agent MAY create commits and push ONLY after explicit user request
+- Agent MUST ask for confirmation before committing
+- Agent MUST ask for confirmation before pushing
+- Default behavior: user reviews changes and commits manually
+- When user requests commit/push: agent follows standard git workflow
+
+### Commit Message Format
 
 - Follow Pro Git book recommendations:
 - Start with uppercase
