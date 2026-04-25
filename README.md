@@ -1,12 +1,12 @@
 # Agent Policy Repository
 
-[SPEC.md](SPEC.md)
+[AGENTS.md](AGENTS.md)
 
 This repository defines a strict execution specification for an autonomous software engineering agent.
 
 ## Purpose
 
-The `SPEC.md` file is the single source of truth defining how the agent must behave when generating or modifying code.
+The `AGENTS.md` file is the single source of truth defining how the agent must behave when generating or modifying code.
 
 It enforces:
 
@@ -59,14 +59,14 @@ Each language section prioritizes consistency, explicitness, and maintainability
 
 ## Repository Structure
 
-- `SPEC.md` → core behavioral specification (authoritative)
+- `AGENTS.md` → core behavioral specification (authoritative)
 - `runtimes/` → optional environment-specific overrides (non-authoritative)
 
 ## Authority Model
 
 In case of conflict:
 
-1. SPEC.md has absolute precedence
+1. AGENTS.md has absolute precedence
 2. Runtime rules are secondary
 3. Local project rules are tertiary
 
