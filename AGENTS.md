@@ -81,22 +81,22 @@ You are an autonomous code generation and modification agent operating in a prod
 ## Code and Documentation Language Policy
 
 - All code MUST be written in English:
-  - variable names
-  - function names
-  - class names
-  - comments (if required)
-  - error messages
-  - logs
+    - variable names
+    - function names
+    - class names
+    - comments (if required)
+    - error messages
+    - logs
 
 - Documentation language:
-  - For existing documentation: follow the language of the existing file
-  - For NEW documentation: Agent MUST ask which language to use
-  - DO NOT default to English
-  - Ask: "Dans quelle langue dois-je écrire cette documentation ?"
+    - For existing documentation: follow the language of the existing file
+    - For NEW documentation: Agent MUST ask which language to use
+    - DO NOT default to English
+    - Ask: "Dans quelle langue dois-je écrire cette documentation ?"
 
 - Test datasets:
-  - Use randomized testing approach when applicable
-  - See Test Data Policy for exceptions
+    - Use randomized testing approach when applicable
+    - See Test Data Policy for exceptions
 
 ---
 
@@ -147,29 +147,29 @@ You are an autonomous code generation and modification agent operating in a prod
 ## Execution Plan Validation (MANDATORY)
 
 - Before ANY code execution or modification, for EVERY user prompt in a session:
-  - Agent MUST propose a structured plan
-  - Plan MUST be decomposed into sub-tasks (like presenting to a Product Owner)
-  - Each sub-task should be atomic and independently validatable
-  - Plan MUST include:
-    - what will be modified
-    - why
-    - order of operations
-    - expected outcome
-    - sub-tasks breakdown
+    - Agent MUST propose a structured plan
+    - Plan MUST be decomposed into sub-tasks (like presenting to a Product Owner)
+    - Each sub-task should be atomic and independently validatable
+    - Plan MUST include:
+        - what will be modified
+        - why
+        - order of operations
+        - expected outcome
+        - sub-tasks breakdown
 
 - Plan iteration:
-  - User may request changes to the plan
-  - Agent refines and re-proposes
-  - Repeat until user explicitly validates
+    - User may request changes to the plan
+    - Agent refines and re-proposes
+    - Repeat until user explicitly validates
 
 - Final validation question (REQUIRED):
   **"Valides-tu ce plan : OUI ou NON ?"**
 
 - Execution rules:
-  - NO execution without explicit "OUI" (or "YES") response
-  - Any other response = plan rejected or needs iteration
-  - Agent MUST wait for binary validation
-  - This applies to EVERY prompt, including correction iterations
+    - NO execution without explicit "OUI" (or "YES") response
+    - Any other response = plan rejected or needs iteration
+    - Agent MUST wait for binary validation
+    - This applies to EVERY prompt, including correction iterations
 
 - NO autonomous iteration allowed without plan validation first
 
@@ -180,9 +180,9 @@ You are an autonomous code generation and modification agent operating in a prod
 ## Uncertainty & Clarification Policy (CRITICAL)
 
 - If there is any ambiguity, missing context, or risk of incorrect assumptions:
-  - STOP immediately
-  - DO NOT proceed
-  - Ask exactly ONE binary question only
+    - STOP immediately
+    - DO NOT proceed
+    - Ask exactly ONE binary question only
 
 - Format:
   "OUI ou NON : <question>"
@@ -194,10 +194,10 @@ You are an autonomous code generation and modification agent operating in a prod
 ## Decision Model
 
 - Optimize for:
-  1. Minimal diff
-  2. Deterministic behavior
-  3. Maximum explicitness
-  4. Lowest cognitive ambiguity
+    1. Minimal diff
+    2. Deterministic behavior
+    3. Maximum explicitness
+    4. Lowest cognitive ambiguity
 
 - No creative alternatives unless explicitly requested.
 
@@ -208,9 +208,9 @@ You are an autonomous code generation and modification agent operating in a prod
 ## Architecture Context
 
 - System architecture:
-  - Microservices
-  - Serverless (AWS Lambda, Cloud Run, etc.)
-  - Event-driven (Kafka, SQS, EventBridge, etc.)
+    - Microservices
+    - Serverless (AWS Lambda, Cloud Run, etc.)
+    - Event-driven (Kafka, SQS, EventBridge, etc.)
 
 - Consequence: NO multithreading by default (system is natively distributed)
 
@@ -227,17 +227,17 @@ You are an autonomous code generation and modification agent operating in a prod
 
 - Use colors that render well in BOTH GitHub Light and Dark themes
 - Recommended color palette:
-  - Primary components: `#4A90E2` (blue) - good contrast in both themes
-  - Secondary components: `#7B68EE` (medium purple) - readable in both themes
-  - Data stores: `#50C878` (emerald green) - visible in both themes
-  - External services: `#F4A460` (sandy brown) - distinguishable in both themes
-  - Critical paths: `#E74C3C` (red) - attention-grabbing in both themes
+    - Primary components: `#4A90E2` (blue) - good contrast in both themes
+    - Secondary components: `#7B68EE` (medium purple) - readable in both themes
+    - Data stores: `#50C878` (emerald green) - visible in both themes
+    - External services: `#F4A460` (sandy brown) - distinguishable in both themes
+    - Critical paths: `#E74C3C` (red) - attention-grabbing in both themes
 
 - AVOID:
-  - Pure black (`#000000`) - invisible in dark theme
-  - Pure white (`#FFFFFF`) - invisible in light theme
-  - Very light colors (e.g., `#F0F0F0`) - poor contrast in light theme
-  - Very dark colors (e.g., `#1A1A1A`) - poor contrast in dark theme
+    - Pure black (`#000000`) - invisible in dark theme
+    - Pure white (`#FFFFFF`) - invisible in light theme
+    - Very light colors (e.g., `#F0F0F0`) - poor contrast in light theme
+    - Very dark colors (e.g., `#1A1A1A`) - poor contrast in dark theme
 
 ### Mermaid Diagram Types
 
@@ -255,11 +255,10 @@ graph TD
     A[API Gateway] -->|HTTP| B[Service Layer]
     B -->|Query| C[(Database)]
     B -->|Publish| D[Event Bus]
-    
-    style A fill:#4A90E2,stroke:#333,stroke-width:2px,color:#fff
-    style B fill:#7B68EE,stroke:#333,stroke-width:2px,color:#fff
-    style C fill:#50C878,stroke:#333,stroke-width:2px,color:#fff
-    style D fill:#F4A460,stroke:#333,stroke-width:2px,color:#000
+    style A fill: #4A90E2, stroke: #333, stroke-width: 2px, color: #fff
+    style B fill: #7B68EE, stroke: #333, stroke-width: 2px, color: #fff
+    style C fill: #50C878, stroke: #333, stroke-width: 2px, color: #fff
+    style D fill: #F4A460, stroke: #333, stroke-width: 2px, color: #000
 ```
 
 ---
@@ -273,14 +272,14 @@ graph TD
 - No silent failures
 - No graceful degradation unless explicitly requested
 
-### Error Types & Exceptions:
+### Error Types & Exceptions
 
 - Agent MAY create custom error types (Go) or exception classes (Java)
 - **NO over-engineering on error handling**
 - Keep error handling lightweight and simple
 - Only create custom types when adding meaningful context
 
-### Error Message Conventions (by language):
+### Error Message Conventions (by language)
 
 **Go:**
 
@@ -295,14 +294,14 @@ graph TD
 - Variable values in square brackets
 - Example: `Failed to process order [123]`
 
-### Logging Policy:
+### Logging Policy
 
 - Default log level: **DEBUG**
 - Entry points (low volume): **INFO**
 - Follow framework conventions
 - **CRITICAL: No secrets in logs (passwords, tokens, API keys, PII)**
 
-### Traceability:
+### Traceability
 
 - No specific constraints
 - Follow framework defaults
@@ -317,11 +316,11 @@ graph TD
 - **Optimize on high-frequency call paths**
 - Prioritize readability over optimization by default
 - Benchmarking:
-  - NOT required by default
-  - Agent MAY propose benchmarking when:
-    - external system calls detected
-    - potential latency concerns identified
-  - User may explicitly request benchmarking
+    - NOT required by default
+    - Agent MAY propose benchmarking when:
+        - external system calls detected
+        - potential latency concerns identified
+    - User may explicitly request benchmarking
 
 ---
 
@@ -329,7 +328,7 @@ graph TD
 
 ## Security Requirements
 
-### Input Validation (LAYERED APPROACH):
+### Input Validation (LAYERED APPROACH)
 
 **Public APIs / Entry Points (STRICT):**
 
@@ -353,20 +352,20 @@ graph TD
 - Example (Java): `OrderValidator`, `CustomerValidator`
 - Example (Go): validator functions or interfaces
 
-### Data Sanitization:
+### Data Sanitization
 
 - MUST be centralized in dedicated methods
 - Prefer dedicated helpers or utility files
 - No inline sanitization scattered across codebase
 
-### Secrets Management:
+### Secrets Management
 
 - Secrets MUST come from environment variables
 - Source: Kubernetes secrets or Docker environment
 - Never hardcode secrets
 - Never log secrets
 
-### Privilege Model:
+### Privilege Model
 
 - Do NOT assume root privileges
 - Follow principle of least privilege
@@ -394,11 +393,13 @@ graph TD
 - Maximum 50 characters
 - Example: `Add user authentication module`
 
-### Branching Strategy:
+### Branching Strategy
 
-- One branch per session
-- NO rebase
-- Merge only
+- Create one branch per session, but only when starting from the `main` branch
+- If the current branch is not `main`, do not create a new branch
+- Do not use rebase, squash, reset, or any operation that could require a force push
+- Integrate changes using merge commits only
+- Never force-push to any branch
 
 ---
 
@@ -406,7 +407,7 @@ graph TD
 
 ## API Design Principles
 
-### REST APIs:
+### REST APIs
 
 - MUST be versioned
 - New APIs: start with `/v1/`
@@ -414,10 +415,10 @@ graph TD
 - **Prioritize backward compatibility**
 - If backward compatibility impossible: create new API version
 
-### API Documentation:
+### API Documentation
 
 - REST APIs MUST have Swagger/OpenAPI contract
-- Contract helps understanding and integration
+- Contract helps to understand and integration
 
 ---
 
@@ -425,7 +426,7 @@ graph TD
 
 ## Database & Persistence
 
-### ORM/Framework:
+### ORM/Framework
 
 **Go:**
 
@@ -435,26 +436,26 @@ graph TD
 
 - Spring JDBC
 
-### Schema Migrations:
+### Schema Migrations
 
 - Use SQL migration scripts
 - Include rollback script when possible (especially for schema changes)
 - Follow Protobuf principles for schema evolution:
-  - NO column renaming
-  - NO column deletion
-  - NO modification of existing columns
-  - ONLY additions allowed
+    - NO column renaming
+    - NO column deletion
+    - NO modification of existing columns
+    - ONLY additions allowed
 
 - Rationale: Ensures backward compatibility at all times
 - Trade-off: Schema may accumulate deprecated columns (acceptable)
 
-### Test Data Seeding:
+### Test Data Seeding
 
 - Randomized testing MUST use seed
 - Seed must be logged/accessible for replay
 - **CRITICAL: Failed randomized tests must be replayable with same seed**
 
-### Schema Validation:
+### Schema Validation
 
 - Required for semi-structured formats (JSON, YAML, XML)
 - Prefer strong constraints from schema systems (Protobuf, JSON Schema)
@@ -469,7 +470,7 @@ graph TD
 - System is distributed by nature (microservices, serverless, event-driven)
 - Multithreading NOT necessary internally
 
-### Exceptions:
+### Exceptions
 
 - User may explicitly request multithreading
 - Agent MAY ask: "Souhaites-tu introduire du multithreading : OUI ou NON ?"
@@ -481,18 +482,18 @@ graph TD
 
 ## Observability & Monitoring
 
-### Metrics:
+### Metrics
 
 - Use counters primarily
 - Health checks required
 
-### Tracing:
+### Tracing
 
 - **NO tracing by default**
 - Tracing is added in FINAL iteration
 - Tracing added when code is mature and finalized
 
-### General Observability:
+### General Observability
 
 - Observability (metrics, health checks, tracing) is a **final iteration**
 - Do NOT add observability during initial development
@@ -505,22 +506,22 @@ graph TD
 
 ## Configuration Management
 
-### Storage:
+### Storage
 
 - Configuration in `.env` files
 - Include `.env.example` with all keys and empty values
 
-### Validation:
+### Validation
 
 - Startup function MUST validate configuration completeness
 - Fail-fast if configuration incomplete
 
-### Environments:
+### Environments
 
 - Environment differences handled via `.env` files
 - Debug mode: change log level only
 
-### Hot Reload:
+### Hot Reload
 
 - NO hot reload
 - Restart required for configuration changes
@@ -533,10 +534,10 @@ graph TD
 
 - Any independent feature MUST be activatable/deactivatable via feature flag
 - Feature flags enable:
-  - Safe deployments
-  - A/B testing
-  - Gradual rollouts
-  - Emergency kill switch
+    - Safe deployments
+    - A/B testing
+    - Gradual rollouts
+    - Emergency kill switch
 
 - Naming convention: follow project standards or ask user
 - Cleanup: remove feature flag after feature stabilization (typically 2-3 versions)
@@ -549,11 +550,11 @@ graph TD
 
 - **NO caching without explicit discussion and approval**
 - Before implementing cache, MUST define:
-  - Cache key strategy
-  - Expiration/TTL strategy
-  - Invalidation strategy
-  - Cache stampede protection
-  - Consistency requirements
+    - Cache key strategy
+    - Expiration/TTL strategy
+    - Invalidation strategy
+    - Cache stampede protection
+    - Consistency requirements
 
 - Agent MUST ask before introducing any caching mechanism
 
@@ -585,14 +586,14 @@ graph TD
 
 ## Retry Policy (External Calls)
 
-### Configuration:
+### Configuration
 
 - Maximum retry attempts: **10**
 - Backoff strategy: **exponential backoff**
 - Maximum total duration: **1 minute**
 - Example progression: 100ms, 200ms, 400ms, 800ms, 1.6s, 3.2s, 6.4s, 12.8s, 25.6s (stops at ~51s total)
 
-### Application:
+### Application
 
 - Apply to all external system calls (APIs, databases, message queues)
 - Use idempotency tokens for non-idempotent APIs
@@ -619,7 +620,7 @@ graph TD
 - **MINOR**: new features, backward compatible
 - **MAJOR**: breaking changes or major feature changes
 
-### Deprecation:
+### Deprecation
 
 - Keep deprecated features for 3 versions
 - Provide deprecation warnings
@@ -631,15 +632,15 @@ graph TD
 
 ## Third-Party Integration Policy
 
-### Rate Limiting & Circuit Breaker:
+### Rate Limiting & Circuit Breaker
 
 - Introduce on-demand when calling external APIs
 - **Especially for AWS APIs**
 - Agent should:
-  - Configure client with rate limiting and circuit breaker when possible
-  - OR propose implementation if not available in client
+    - Configure client with rate limiting and circuit breaker when possible
+    - OR propose implementation if not available in client
 
-### Retry Policy:
+### Retry Policy
 
 - See "Retry Policy (External Calls)" section above
 
@@ -701,16 +702,16 @@ graph TD
 ## Retry / Iteration Policy (FAILURE LOOP CONTROL)
 
 - On build/test/lint failure:
-  - Agent MUST propose a correction plan
-  - Agent MUST ask: "Valides-tu ce plan de correction : OUI ou NON ?"
-  - NO autonomous iteration without validation
+    - Agent MUST propose a correction plan
+    - Agent MUST ask: "Valides-tu ce plan de correction : OUI ou NON ?"
+    - NO autonomous iteration without validation
 
-### Each iteration MUST:
+### Each iteration MUST
 
 - apply minimal corrective change
 - re-run full validation (build + tests + lint)
 
-### Stop conditions:
+### Stop conditions
 
 - success
 - or user rejects plan
@@ -777,10 +778,10 @@ A task is complete only if:
 ## Diff Transparency Requirement
 
 - Each final execution MUST include a concise diff summary:
-  - what changed
-  - why it changed
-  - scope of change
-  - performance indicators (if relevant)
+    - what changed
+    - why it changed
+    - scope of change
+    - performance indicators (if relevant)
 
 - Must be short, structured, and readable.
 
@@ -792,16 +793,16 @@ A task is complete only if:
 
 - If new rules or conventions are introduced during execution:
 
-### Agent MUST update:
+### Agent MUST update
 
 1. nearest relevant spec file (e.g. AGENTS.md or CLAUDE.md in current directory)
 2. parent-level spec files (if applicable)
 
 - Updates must be:
-  - minimal
-  - surgical
-  - consistent
-  - written in the language of the existing spec file
+    - minimal
+    - surgical
+    - consistent
+    - written in the language of the existing spec file
 
 - Agent must propagate rules upward (cascading behavior).
 
@@ -820,20 +821,20 @@ A task is complete only if:
 
 ## Refactoring Policy
 
-### Allowed without approval:
+### Allowed without approval
 
 - Extract method (within current scope)
 - Rename symbols (variables, functions, classes) for clarity
 - Remove dead code
 
-### Requires approval:
+### Requires approval
 
 - Module-level refactoring
 - Architectural changes
 - Pattern changes
 - Cross-module refactoring
 
-### Rationale:
+### Rationale
 
 - Local improvements enhance readability
 - Structural changes require alignment
@@ -845,8 +846,8 @@ A task is complete only if:
 ## Pattern Consistency Policy
 
 - If multiple patterns exist:
-  - STOP
-  - ask binary question
+    - STOP
+    - ask binary question
 - No new patterns without approval.
 
 ---
@@ -859,7 +860,7 @@ A task is complete only if:
 - Tests define behavior.
 - Use randomized testing approach when applicable.
 
-### Test Modification Policy:
+### Test Modification Policy
 
 - **Never modify passing tests** (they guarantee non-regression)
 - **When behavior changes**: existing tests MUST be updated to reflect new behavior
@@ -869,28 +870,28 @@ A task is complete only if:
 ### Test Data Policy (RANDOMIZED TESTING)
 
 - FORBIDDEN (for arbitrary test data):
-  - "toto", "tata", "titi", "foo", "bar", "fubar", "test", "example", "abc"
-  - Any hardcoded semantic or predictable values
+    - "toto", "tata", "titi", "foo", "bar", "fubar", "test", "example", "abc"
+    - Any hardcoded semantic or predictable values
 
 - REQUIRED (for arbitrary test data):
-  - UUID v4 for strings
-  - Secure random for numbers
-  - Randomized test data generation
-  - **Seed must be logged and replayable**
+    - UUID v4 for strings
+    - Secure random for numbers
+    - Randomized test data generation
+    - **Seed must be logged and replayable**
 
 - EXCEPTIONS (when randomization does NOT apply):
-  - Testing against known system constants
-  - Testing against fixed API responses
-  - Testing against predefined enum values
-  - Testing equality with domain-specific expected values
-  - Testing format validation (e.g., email format, date format)
-  - Testing business rules with specific thresholds
+    - Testing against known system constants
+    - Testing against fixed API responses
+    - Testing against predefined enum values
+    - Testing equality with domain-specific expected values
+    - Testing format validation (e.g., email format, date format)
+    - Testing business rules with specific thresholds
 
 - Rationale:
-  - Randomized testing prevents test coupling to arbitrary values
-  - Ensures tests validate behavior, not coincidental data
-  - Known constants are legitimate test inputs when they represent system constraints
-  - Seed allows debugging and replay of failed tests
+    - Randomized testing prevents test coupling to arbitrary values
+    - Ensures tests validate behavior, not coincidental data
+    - Known constants are legitimate test inputs when they represent system constraints
+    - Seed allows debugging and replay of failed tests
 
 ---
 
@@ -911,13 +912,13 @@ A task is complete only if:
 ## Build Execution Policy
 
 - Agent MUST run:
-  - build
-  - tests
-  - lint (if available)
+    - build
+    - tests
+    - lint (if available)
 
 - If unknown execution method:
-  - STOP
-  - request instructions
+    - STOP
+    - request instructions
 
 ---
 
@@ -927,9 +928,9 @@ A task is complete only if:
 
 - Skills must be proposed, not directly added.
 - Must include:
-  - purpose
-  - implementation plan
-  - justification
+    - purpose
+    - implementation plan
+    - justification
 - Requires approval.
 
 ---
@@ -972,7 +973,7 @@ A task is complete only if:
 - no tabs
 - no manual wrapping
 - if line too long:
-  - introduce variables instead of wrapping
+    - introduce variables instead of wrapping
 
 ---
 
@@ -1020,12 +1021,12 @@ A task is complete only if:
 
 After each execution:
 
-### Output order:
+### Output order
 
 1. code / output
 2. acknowledgment message
 
-### Acknowledgement must include:
+### Acknowledgement must include
 
 - concise status
 - key decision summary (if relevant)
