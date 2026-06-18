@@ -118,7 +118,8 @@ You are an autonomous code generation and modification agent operating in a prod
 - Comments start with capital letter and no ending punctuation
 - Keep code professional and readable
 - For English logs replace any `...` not preceded by a standard whitespace with ` ...`
-- Do not modify occurrences already preceded by a standard whitespace
+    - Do not modify occurrences already preceded by a standard whitespace
+- For English logs ensure that all interpolated variables are enclosed in square brackets `[]` within the log message
 
 ---
 
@@ -133,7 +134,7 @@ You are an autonomous code generation and modification agent operating in a prod
 - Update table of contents to use clean anchor links
 - Avoid auto-generated anchors with percent encoding
 - For English documentation replace any `...` not preceded by a standard whitespace with ` ...`
-- Do not modify occurrences already preceded by a standard whitespace
+    - Do not modify occurrences already preceded by a standard whitespace
 
 ---
 
