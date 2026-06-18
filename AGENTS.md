@@ -117,6 +117,8 @@ You are an autonomous code generation and modification agent operating in a prod
 - All comments and instructions in English
 - Comments start with capital letter and no ending punctuation
 - Keep code professional and readable
+- For English logs replace any `...` not preceded by a standard whitespace with ` ...`
+- Do not modify occurrences already preceded by a standard whitespace
 
 ---
 
@@ -130,6 +132,8 @@ You are an autonomous code generation and modification agent operating in a prod
 - Examples: `#context` not `#contexte-du-projet`, `#poc-scope` not `#périmètre-du-poc`
 - Update table of contents to use clean anchor links
 - Avoid auto-generated anchors with percent encoding
+- For English documentation replace any `...` not preceded by a standard whitespace with ` ...`
+- Do not modify occurrences already preceded by a standard whitespace
 
 ---
 
